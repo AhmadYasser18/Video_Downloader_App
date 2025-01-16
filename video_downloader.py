@@ -6,6 +6,7 @@ from kivy.uix.textinput import TextInput
 from kivy.uix.button import Button
 from kivy.uix.widget import Widget
 from kivy.uix.popup import Popup
+from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.screenmanager import ScreenManager, Screen
 import os
 
@@ -184,10 +185,25 @@ class MyMainApp(App):
         wm.add_widget(YoutubeWin(name="Youtube"))
         return wm
         
-def check_pop():
-    pop = Popup(title='Confirm',
-                  content=Label(text='The video size is: ')
-                ,size_hint=(1,0.5)
+def check_pop(vid_size=0):
+    
+    layout = BoxLayout(orientation='vertical', spacing=10, padding=10)
+    
+    layout.add_widget(Label(text=f"The video size is: {vid_size}."))
+    
+    button_layout = BoxLayout(orientation='horizontal', spacing=10)
+    btn_size = (1,0.6)
+    
+    ok_button = Button(text="OK", size_hint= btn_size, on_release=lambda x: self.ok_action(popup))
+    cancel_button = Button(text="Cancel", size_hint= btn_size, on_release=lambda x: pop.dismiss())
+    button_layout.add_widget(ok_button)
+    button_layout.add_widget(cancel_button)
+
+    layout.add_widget(button_layout)
+
+        # Create the popup
+        
+    pop = Popup(title='Confirm', content=layout,size_hint=(1,0.5)
                 )
     
 
