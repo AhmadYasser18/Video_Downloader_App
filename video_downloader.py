@@ -16,7 +16,12 @@ kv = """
     name: "Main"
     GridLayout:
         cols: 1
-        
+        Label:
+            text: "Download from: "
+            font_size: 80
+            size_hint:  None,None
+            size: root.width, root.height / 3
+            
         Button:
             text: "Linkedin"
             
@@ -194,9 +199,9 @@ def check_pop(vid_size=0):
     button_layout = BoxLayout(orientation='horizontal', spacing=10)
     btn_size = (1,0.6)
     
-    ok_button = Button(text="OK", size_hint= btn_size, on_release=lambda x: self.ok_action(popup))
+    download_button = Button(text="Download", size_hint= btn_size, on_release=lambda x: self.ok_action(popup))
     cancel_button = Button(text="Cancel", size_hint= btn_size, on_release=lambda x: pop.dismiss())
-    button_layout.add_widget(ok_button)
+    button_layout.add_widget(download_button)
     button_layout.add_widget(cancel_button)
 
     layout.add_widget(button_layout)
