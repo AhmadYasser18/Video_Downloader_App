@@ -9,4 +9,12 @@ To do:
 - [ ] Add functions to buttons:
      - [x] Go back
      - [x] Clear
-     - [ ] Download
+     - [ ] Download:
+          - [ ] Add popup
+          - [ ] check for video size function
+          - [ ] Add download function
+- [ ] Add selecting quality
+- [ ] Check if drop down list could be added.
+- [ ] Add browsing for save location.           
+- [ ] Check if a browser page is possible
+ 
