@@ -1,3 +1,4 @@
+#App
 from kivy.app import App
 from kivy.uix.label import Label
 from kivy.lang import Builder
@@ -8,6 +9,11 @@ from kivy.uix.widget import Widget
 from kivy.uix.popup import Popup
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.screenmanager import ScreenManager, Screen
+
+#Youtube
+from pytubefix import YouTube
+from pytubefix.cli import on_progress
+
 import os
 
 # Define the KV layout as a multi-line string
@@ -172,8 +178,45 @@ class LinkedinWin(Screen):
 class YoutubeWin(Screen):
     
     def download(self):
-        check_pop()
+        if self.ids.link.text.strip() != "" :
+            yt_url = self.ids.link.text.strip()
+
+            yt = YouTube(yt_url, on_progress_callback=on_progress) #, use_po_token=True)
+            
+            yt_video = yt.streams.get_audio_only()
+            
+            vid_size = yt_video.filesize_mb
+            
+            check_pop(vid_size, yt.title)
         
+        else:
+            self.invalid_popup()
+
+
+        #yt_video.download()
+        
+        #print(yt.title)
+        
+
+    #Invalid Link Popup
+    def invalid_popup(self):
+        invalid_layout = BoxLayout(orientation='vertical', spacing=10, padding=10)
+        invalid_layout .add_widget(Label(text=f"Invalid link!\nPlease recheck and enter a valid link."))
+        
+        button_layout = BoxLayout(orientation='horizontal', spacing=10)
+        btn_size = (1,0.6)   
+        
+        ok_button = Button(text="Ok", size_hint= btn_size, on_release=lambda x: invalid_pop.dismiss())
+        
+        button_layout.add_widget(ok_button)
+        
+        invalid_layout.add_widget(button_layout)
+        
+        #Create the popup
+        invalid_pop = Popup(title='Invalid', content=invalid_layout ,size_hint=(1,0.5))
+        
+        invalid_pop.open()     
+
     def clear_content(self):
         self.ids.link.text = ""
         self.ids.vid_name.text = ""
@@ -190,31 +233,31 @@ class MyMainApp(App):
         wm.add_widget(YoutubeWin(name="Youtube"))
         return wm
         
-def check_pop(vid_size=0):
+def check_pop(vid_size=0, title = None):
     
     layout = BoxLayout(orientation='vertical', spacing=10, padding=10)
     
-    layout.add_widget(Label(text=f"The video size is: {vid_size}."))
+    layout.add_widget(Label(text=f"The video size is: {vid_size}.\n Would you like to download: {title}?"))
     
     button_layout = BoxLayout(orientation='horizontal', spacing=10)
+    
     btn_size = (1,0.6)
     
-    download_button = Button(text="Download", size_hint= btn_size, on_release=lambda x: self.ok_action(popup))
+    download_button = Button(text="Download", size_hint= btn_size, on_release=lambda x: pop.dismiss())
     cancel_button = Button(text="Cancel", size_hint= btn_size, on_release=lambda x: pop.dismiss())
+    
     button_layout.add_widget(download_button)
     button_layout.add_widget(cancel_button)
 
     layout.add_widget(button_layout)
 
-        # Create the popup
-        
-    pop = Popup(title='Confirm', content=layout,size_hint=(1,0.5)
-                )
+    # Create the popup
     
+    pop = Popup(title='Confirm', 
+                content=layout,size_hint=(1,0.5))
 
     pop.open()
 
 
 if __name__ == "__main__":
     MyMainApp().run()
-
