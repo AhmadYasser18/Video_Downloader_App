@@ -10,9 +10,14 @@ To do:
      - [x] Go back
      - [x] Clear
      - [ ] Download:
-          - [ ] Add popup
-          - [ ] check for video size function
-          - [ ] Add download function
+          - [ ] YouTube: 
+               - [x] Add popup
+               - [x] Check for video size function
+               - [ ] Add download function
+          - [ ] LinkedIn: 
+               - [ ] Add popup
+               - [ ] check for video size function
+               - [ ] Add download function
 - [ ] Add selecting quality
 - [ ] Check if drop down list could be added.
 - [ ] Add browsing for save location.           
